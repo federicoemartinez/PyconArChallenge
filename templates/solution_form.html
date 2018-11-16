@@ -1,0 +1,20 @@
+{% load bootstrap4 %}
+<form action="/" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form_errors form type='non_fields' %}
+    {% bootstrap_field form.email %}
+
+    <div>Primer valor: {{ first }}</div>
+    {% bootstrap_field form.number_one %}
+    {% bootstrap_field form.solution_one %}
+    <div>Segundo valor: {{ second }}</div>
+    {% bootstrap_field form.number_two %}
+    {% bootstrap_field form.solution_two %}
+    <div>Tercer valor: {{ third }}  </div>
+    {% bootstrap_field form.number_three %}
+    {% bootstrap_field form.solution_three %}
+    {% bootstrap_field form.captcha %}
+    {{ form.captcha.errors }}
+    {% bootstrap_field form.anti_tampering %}
+    {% buttons submit='Enviar respuesta' %}{% endbuttons %}
+</form>

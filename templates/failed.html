@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}
+    InvGate Challenge!
+{% endblock %}
+
+{% block content %}
+    <h2>La solución no fue correcta, pero no te preocupes, puedes volver a intentarlo</h2>
+{%  include "problem.html" %}
+{% include "solution_form.html" %}
+
+{% endblock %}
