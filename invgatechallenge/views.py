@@ -24,8 +24,8 @@ def generate_digest(number_one, number_two, number_three, token=None):
 
 def mark_token_as_used(digest):
     index = digest.find("_")
-    id = digest[0:index]
-    token = Token.objects.filter(id=id).delete()
+    token_id = digest[0:index]
+    token = Token.objects.filter(id=token_id).delete()
 
 
 class ChallengeForm(forms.Form):
@@ -44,10 +44,10 @@ class ChallengeForm(forms.Form):
         cleaned_data = super(ChallengeForm, self).clean()
         old_digest = cleaned_data.get("anti_tampering", '')
         index = old_digest.find("_")
-        id = old_digest[0:index]
+        token_id = old_digest[0:index]
         digest = generate_digest(cleaned_data.get('number_one', ''), cleaned_data.get('number_two', ''),
-                                 cleaned_data.get('number_three', ''), id)
-        token = Token.objects.get(id=id)
+                                 cleaned_data.get('number_three', ''), token_id)
+        token = Token.objects.get(id=token_id)
         if index == -1 or digest != cleaned_data.get("anti_tampering", '') or token is None:
             self.add_error(None,
                            'Parece que nos queres hackear. Si seguis tratando lo vas a poder hacer, pero no es la idea. Dale! Copate!')
@@ -58,7 +58,7 @@ class ChallengeForm(forms.Form):
                                                               cleaned_data.get('number_two', ''),
                                                               cleaned_data.get('number_three', ''))
         self.data = self.cleaned_data
-        mark_token_as_used(id)
+        mark_token_as_used(token_id)
         return cleaned_data
 
 
@@ -131,7 +131,7 @@ def present_challenge(request):
             s.save()
             if failed:
                 # candidates_one, candidates_two, candidates_three =  choice_numbers()
-                #form = generate_form(candidates_one, candidates_two, candidates_three)
+                # form = generate_form(candidates_one, candidates_two, candidates_three)
                 candidates_one, candidates_two, candidates_three = map(lambda x: form.cleaned_data.get(x),
                                                                        ['number_one', 'number_two', 'number_three'])
                 return render(request, 'failed.html', {'form': form, 'first': candidates_one, 'second': candidates_two,
@@ -140,7 +140,7 @@ def present_challenge(request):
                 return render(request, 'thanks.html')
         else:
             # candidates_one, candidates_two, candidates_three =  choice_numbers()
-            #form = generate_form(candidates_one, candidates_two, candidates_three)
+            # form = generate_form(candidates_one, candidates_two, candidates_three)
             candidates_one, candidates_two, candidates_three = map(lambda x: form.cleaned_data.get(x),
                                                                    ['number_one', 'number_two', 'number_three'])
             return render(request, 'challenge.html',

@@ -25,7 +25,7 @@ SECRET_KEY = '7(o8_r)c*h1f(vh0k%8mbpx=a7s=hgpi52ay@fxzk!f7&%zoxr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -122,12 +122,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
-    #'invgatechallenge',
+    # 'invgatechallenge',
 )
 
-#CHANGE THESE
-SECRET_PREFIX="SECRET_PREFIX"
-SECRET_SUFFIX="SECRET_SUFFIX"
+# CHANGE THESE
+SECRET_PREFIX = "SECRET_PREFIX"
+SECRET_SUFFIX = "SECRET_SUFFIX"
