@@ -6,7 +6,7 @@ from django import forms
 from captcha.fields import CaptchaField
 from django.conf import settings
 
-from invgatechallenge.models import Submission, Token
+from invgatechallenge.models import Submission, Token, HackDetection
 
 
 def generate_digest(number_one, number_two, number_three, token=None):
@@ -22,10 +22,8 @@ def generate_digest(number_one, number_two, number_three, token=None):
     return digest
 
 
-def mark_token_as_used(digest):
-    index = digest.find("_")
-    token_id = digest[0:index]
-    token = Token.objects.filter(id=token_id).delete()
+def mark_token_as_used(token_id):
+    Token.objects.filter(id=token_id).delete()
 
 
 class ChallengeForm(forms.Form):
@@ -51,6 +49,7 @@ class ChallengeForm(forms.Form):
         if index == -1 or digest != cleaned_data.get("anti_tampering", '') or token is None:
             self.add_error(None,
                            'Parece que nos queres hackear. Si seguis tratando lo vas a poder hacer, pero no es la idea. Dale! Copate!')
+            HackDetection(email = cleaned_data.get('email', '')).save()
         mail = cleaned_data.get('email', '')
         if '+' in mail:
             self.add_error('email', 'El caracter + no esta permitido')

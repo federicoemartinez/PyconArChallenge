@@ -9,6 +9,10 @@ class Submission(models.Model):
     email = models.EmailField(blank=False, db_index=True)
     is_correct = models.BooleanField()
 
+class HackDetection(models.Model):
+    email = models.EmailField(blank=False, db_index=True)
+
+
 class Token(models.Model):
     pass
 
