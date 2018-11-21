@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 from hashlib import sha256
 
@@ -29,11 +31,11 @@ def mark_token_as_used(token_id):
 class ChallengeForm(forms.Form):
     email = forms.EmailField()
     number_one = forms.IntegerField(widget=forms.HiddenInput())
-    solution_one = forms.IntegerField(label='Respuesta para el primer valor')
+    solution_one = forms.IntegerField(label='Respuesta Desafío 1)')
     number_two = forms.IntegerField(widget=forms.HiddenInput())
-    solution_two = forms.IntegerField(label='Respuesta para el segundo valor')
+    solution_two = forms.IntegerField(label='Respuesta Desafío 2)')
     number_three = forms.IntegerField(widget=forms.HiddenInput())
-    solution_three = forms.IntegerField(label='Respuesta para el tercer valor')
+    solution_three = forms.IntegerField(label='Respuesta Desafío 3)')
     anti_tampering = forms.CharField(widget=forms.HiddenInput())
 
     captcha = CaptchaField()
@@ -49,7 +51,7 @@ class ChallengeForm(forms.Form):
             token = Token.objects.get(id=token_id)
         except Token.DoesNotExist as e:
             token = None
-        
+
         if index == -1 or digest != cleaned_data.get("anti_tampering", '') or token is None:
             self.add_error(None,
                            'Parece que nos queres hackear. Si seguis tratando lo vas a poder hacer, pero no es la idea. Dale! Copate!')
