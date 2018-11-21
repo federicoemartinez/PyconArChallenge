@@ -25,7 +25,7 @@ SECRET_KEY = '7(o8_r)c*h1f(vh0k%8mbpx=a7s=hgpi52ay@fxzk!f7&%zoxr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pyconar.invgate.com']
 
 
 # Application definition
@@ -78,11 +78,15 @@ WSGI_APPLICATION = 'pyconchallenge.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pyconchallenge',  # Or path to database file if using sqlite3.
+        'USER': 'pyconchallenge',  # Not used with sqlite3.
+        'PASSWORD': 'INV4ever',  # Not used with sqlite3.
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+     }
+ }
 
 
 # Password validation
@@ -123,11 +127,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-    # 'invgatechallenge',
-)
 
 # CHANGE THESE
 SECRET_PREFIX = "SECRET_PREFIX"

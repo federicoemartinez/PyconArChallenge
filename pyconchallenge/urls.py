@@ -20,7 +20,7 @@ from django.contrib import admin
 from invgatechallenge.views import present_challenge
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
 ]
 
 urlpatterns += [

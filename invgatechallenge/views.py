@@ -45,7 +45,11 @@ class ChallengeForm(forms.Form):
         token_id = old_digest[0:index]
         digest = generate_digest(cleaned_data.get('number_one', ''), cleaned_data.get('number_two', ''),
                                  cleaned_data.get('number_three', ''), token_id)
-        token = Token.objects.get(id=token_id)
+        try:
+            token = Token.objects.get(id=token_id)
+        except Token.DoesNotExist as e:
+            token = None
+        
         if index == -1 or digest != cleaned_data.get("anti_tampering", '') or token is None:
             self.add_error(None,
                            'Parece que nos queres hackear. Si seguis tratando lo vas a poder hacer, pero no es la idea. Dale! Copate!')
