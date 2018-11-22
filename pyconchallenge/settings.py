@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7(o8_r)c*h1f(vh0k%8mbpx=a7s=hgpi52ay@fxzk!f7&%zoxr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'pyconar.invgate.com']
 
