@@ -15,7 +15,7 @@ def generate_digest(number_one, number_two, number_three, token=None):
     if token is None:
         t = Token()
         t.save()
-        token = t.pk
+        token = t.uniqid
     sha = sha256()
     sha.update(settings.SECRET_PREFIX)
     sha.update(str(number_one) + "_" + str(number_two) + "_" + str(number_three) + "_" + str(token))
@@ -25,10 +25,13 @@ def generate_digest(number_one, number_two, number_three, token=None):
 
 
 def mark_token_as_used(token_id):
-    Token.objects.filter(id=token_id).delete()
+    Token.objects.filter(uniqid=token_id).delete()
 
 
 class ChallengeForm(forms.Form):
+    name = forms.CharField(label='Nombre')
+    lastname = forms.CharField(label='Apellido')
+    linkedin = forms.URLField(label="Perfil de linkedin", required=False)
     email = forms.EmailField()
     number_one = forms.IntegerField(widget=forms.HiddenInput())
     solution_one = forms.IntegerField(label='Respuesta Desafío 1)')
@@ -48,7 +51,7 @@ class ChallengeForm(forms.Form):
         digest = generate_digest(cleaned_data.get('number_one', ''), cleaned_data.get('number_two', ''),
                                  cleaned_data.get('number_three', ''), token_id)
         try:
-            token = Token.objects.get(id=token_id)
+            token = Token.objects.get(uniqid=token_id)
         except Token.DoesNotExist as e:
             token = None
 
@@ -132,7 +135,7 @@ def present_challenge(request):
                     failed = True
                     break
 
-            s = Submission(email=form.cleaned_data.get('email'), is_correct=not failed)
+            s = Submission(email=form.cleaned_data.get('email'), is_correct=not failed, name=form.cleaned_data.get('name'), lastname=form.cleaned_data.get('lastname'), linkedin_url=form.cleaned_data.get('linkedin'))
             s.save()
             if failed:
                 # candidates_one, candidates_two, candidates_three =  choice_numbers()
