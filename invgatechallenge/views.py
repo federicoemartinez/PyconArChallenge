@@ -160,3 +160,8 @@ def present_challenge(request):
         form = generate_form(candidates_one, candidates_two, candidates_three)
         return render(request, 'challenge.html',
                       {'form': form, 'first': candidates_one, 'second': candidates_two, 'third': candidates_three})
+
+
+def challenge_finished(request):
+    if request.method == 'GET':
+        return render(request, 'closed.html')

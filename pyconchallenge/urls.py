@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
-from invgatechallenge.views import present_challenge
+from invgatechallenge.views import challenge_finished
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -28,7 +28,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^', present_challenge),
+    url(r'^', challenge_finished),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
